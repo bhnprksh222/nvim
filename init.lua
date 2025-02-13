@@ -35,4 +35,5 @@ require("lazy").setup({
 	require("plugins.indent-blankline"),
 	require("plugins.misc"),
 	require("plugins.none-ls"),
+	require("plugins.vim-floaterm"),
 })
