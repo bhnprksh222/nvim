@@ -41,4 +41,8 @@ return {
 			require("colorizer").setup()
 		end,
 	},
+	{
+		-- Edit text with multi-line cursors
+		"mg979/vim-visual-multi",
+	},
 }
