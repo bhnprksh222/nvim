@@ -37,4 +37,6 @@ require("lazy").setup({
 	require("plugins.misc"),
 	require("plugins.none-ls"),
 	require("plugins.vim-floaterm"),
+	require("plugins.vim-multiple-cursors"),
+	require("plugins.ts-autotag"),
 })
