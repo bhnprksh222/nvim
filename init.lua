@@ -39,4 +39,5 @@ require("lazy").setup({
 	require("plugins.vim-floaterm"),
 	require("plugins.vim-multiple-cursors"),
 	require("plugins.ts-autotag"),
+	require("plugins.rainbow"),
 })
