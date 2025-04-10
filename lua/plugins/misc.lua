@@ -45,4 +45,26 @@ return {
 		-- Edit text with multi-line cursors
 		"mg979/vim-visual-multi",
 	},
+	{
+		"APZelos/blamer.nvim",
+		event = "BufReadPost",
+		init = function()
+			-- Set options before plugin loads
+			vim.g.blamer_enabled = true
+			vim.g.blamer_delay = 500
+			vim.g.blamer_show_in_visual_modes = false
+			vim.g.blamer_show_in_insert_modes = false
+			vim.g.blamer_prefix = " > "
+			vim.g.blamer_template = "<committer>, <committer-time> • <summary>"
+			vim.g.blamer_date_format = "%d/%m/%y"
+			vim.g.blamer_relative_time = true
+		end,
+		keys = {
+			{
+				"<space>gb",
+				"<cmd>BlamerToggle<CR>",
+				desc = "Toggle Git Blame (Blamer)",
+			},
+		},
+	},
 }
