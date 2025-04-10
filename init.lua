@@ -40,4 +40,5 @@ require("lazy").setup({
 	require("plugins.vim-multiple-cursors"),
 	require("plugins.ts-autotag"),
 	require("plugins.rainbow"),
+	require("plugins.gitgraph"),
 })
