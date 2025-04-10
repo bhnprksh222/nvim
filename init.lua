@@ -34,11 +34,11 @@ require("lazy").setup({
 	require("plugins.comment"),
 	require("plugins.gitsigns"),
 	require("plugins.indent-blankline"),
-	require("plugins.misc"),
 	require("plugins.none-ls"),
 	require("plugins.vim-floaterm"),
 	require("plugins.vim-multiple-cursors"),
 	require("plugins.ts-autotag"),
 	require("plugins.rainbow"),
 	require("plugins.gitgraph"),
+	require("plugins.misc"),
 })
