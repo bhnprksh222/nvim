@@ -1,6 +1,6 @@
 # Neovim Installation on macOS
 
-[VIMMER UI](https://postimg.cc/qgpkK8qW)
+![VIMMER UI](https://github.com/bhnprksh222/nvim/raw/main/ui.png)
 
 ## Prerequisites
 
