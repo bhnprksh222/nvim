@@ -1,5 +1,7 @@
 # Neovim Installation on macOS
 
+[VIMMER UI](https://postimg.cc/qgpkK8qW)
+
 ## Prerequisites
 
 Ensure you have [Homebrew](https://brew.sh/) installed on your Mac. If not, install it using:
