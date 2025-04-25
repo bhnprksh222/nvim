@@ -41,4 +41,5 @@ require("lazy").setup({
 	require("plugins.rainbow"),
 	require("plugins.gitgraph"),
 	require("plugins.misc"),
+	require("plugins.diffview"),
 })

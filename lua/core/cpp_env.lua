@@ -73,4 +73,4 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Manual command to trigger the setup
-vim.api.nvim_set_keymap("n", "<leader>r", ":lua SetupCppEnvironment()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>r1", ":lua SetupCppEnvironment()<CR>", { noremap = true, silent = true })
