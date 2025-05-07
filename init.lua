@@ -1,6 +1,5 @@
 require("core.options")
 require("core.keymaps")
-require("core.cpp_env")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -42,4 +41,5 @@ require("lazy").setup({
 	require("plugins.gitgraph"),
 	require("plugins.misc"),
 	require("plugins.diffview"),
+	require("plugins.code-runner"),
 })
