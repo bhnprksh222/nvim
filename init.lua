@@ -42,4 +42,5 @@ require("lazy").setup({
 	require("plugins.misc"),
 	require("plugins.diffview"),
 	require("plugins.code-runner"),
+	require("plugins.scrollbar"),
 })
