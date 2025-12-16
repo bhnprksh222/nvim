@@ -34,7 +34,7 @@ require("lazy").setup({
 	require("plugins.gitsigns"),
 	require("plugins.indent-blankline"),
 	require("plugins.none-ls"),
-	require("plugins.vim-floaterm"),
+	require("plugins.toggleterm"),
 	require("plugins.vim-multiple-cursors"),
 	require("plugins.ts-autotag"),
 	require("plugins.rainbow"),
