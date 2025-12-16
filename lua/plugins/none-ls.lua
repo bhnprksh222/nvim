@@ -24,6 +24,7 @@ return {
 
 		local sources = {
 			diagnostics.checkmake,
+			diagnostics.eslint_d,
 			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
