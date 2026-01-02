@@ -107,4 +107,11 @@ return {
 			})
 		end,
 	},
+	-- Sub Cursor on left
+	{
+		"gen740/SmoothCursor.nvim",
+		config = function()
+			require("smoothcursor").setup()
+		end,
+	},
 }
