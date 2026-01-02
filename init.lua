@@ -43,5 +43,5 @@ require("lazy").setup({
 	require("plugins.diffview"),
 	require("plugins.code-runner"),
 	require("plugins.scrollbar"),
-	require("lua.plugins.strudel"),
+	require("plugins.strudel"),
 })
