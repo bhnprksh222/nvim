@@ -98,3 +98,19 @@ vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Move to left
 vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "Move to right split" })
 vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Move to below split" })
 vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Move to above split" })
+
+-- Git diff keymaps
+-- Open diff view (side-by-side like your screenshot)
+vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", {
+	desc = "Git Diff (Diffview)",
+})
+
+-- Close diff view
+vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<CR>", {
+	desc = "Close Diffview",
+})
+
+-- File history
+vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory<CR>", {
+	desc = "Git File History",
+})

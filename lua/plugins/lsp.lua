@@ -129,7 +129,7 @@ return {
 			},
 			-- But for many setups, the LSP (`tsserver`) will work just fine
 			ts_ls = {}, -- tsserver is deprecated
-			ruff_lsp = {},
+			ruff = {},
 			pylsp = {
 				settings = {
 					pylsp = {
