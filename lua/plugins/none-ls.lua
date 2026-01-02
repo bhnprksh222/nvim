@@ -1,5 +1,6 @@
 return {
 	"nvimtools/none-ls.nvim",
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"nvimtools/none-ls-extras.nvim",
 		"jayp0521/mason-null-ls.nvim", -- ensure dependencies are installed
@@ -14,41 +15,51 @@ return {
 			ensure_installed = {
 				"prettier", -- ts/js formatter
 				"stylua", -- lua formatter
-				"eslint_d", -- ts/js linter
 				"shfmt", -- Shell formatter
 				"checkmake", -- linter for Makefiles
 				"ruff", -- Python linter and formatter
+				"black", -- Python linter and formatter
 			},
 			automatic_installation = true,
 		})
 
 		local sources = {
+			-- diagnostics
 			diagnostics.checkmake,
-			diagnostics.eslint_d,
+
+			-- formatting
 			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
-			formatting.terraform_fmt,
-			require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
-			require("none-ls.formatting.ruff_format"),
+			formatting.black,
+			-- only enable terraform formatter if terraform exists
 		}
+		if vim.fn.executable("terraform") == 1 then
+			table.insert(sources, formatting.terraform_fmt)
+		end
 
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 		null_ls.setup({
-			-- debug = true, -- Enable debug mode. Inspect logs with :NullLsLog.
 			sources = sources,
-			-- you can reuse a shared lspconfig on_attach callback here
-			on_attach = function(client, bufnr)
-				if client.supports_method("textDocument/formatting") then
-					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-					vim.api.nvim_create_autocmd("BufWritePre", {
-						group = augroup,
-						buffer = bufnr,
-						callback = function()
-							vim.lsp.buf.format({ async = false })
-						end,
-					})
-				end
+			on_attach = function(_, bufnr)
+				vim.api.nvim_clear_autocmds({
+					group = augroup,
+					buffer = bufnr,
+				})
+
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					group = augroup,
+					buffer = bufnr,
+					callback = function()
+						vim.lsp.buf.format({
+							async = false,
+							filter = function(c)
+								return c.name == "null-ls"
+							end,
+						})
+					end,
+				})
 			end,
 		})
 	end,
