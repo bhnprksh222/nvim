@@ -46,4 +46,5 @@ require("lazy").setup({
 	require("plugins.scrollbar"),
 	require("plugins.strudel"),
 	require("plugins.whitespace"),
+	require("plugins.undo-glow"),
 })

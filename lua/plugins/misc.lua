@@ -94,4 +94,17 @@ return {
 		end,
 		ft = { "markdown" },
 	},
+	-- smear cursor
+	{
+		"sphamba/smear-cursor.nvim",
+		event = "CursorMoved", -- lazy-load on first cursor movement
+		config = function()
+			require("smear_cursor").setup({
+				stiffness = 0.8, -- how rigid the smear is
+				trailing_stiffness = 0.5, -- how much it lags behind
+				distance_stop_animating = 0.5, -- stop animation for small moves
+				hide_target_hack = false, -- keep cursor visible
+			})
+		end,
+	},
 }
