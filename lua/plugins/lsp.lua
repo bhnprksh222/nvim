@@ -156,23 +156,29 @@ return {
 			yamlls = {},
 
 			lua_ls = {
-				-- cmd = {...},
-				-- filetypes = { ...},
-				-- capabilities = {},
 				settings = {
 					Lua = {
 						completion = {
 							callSnippet = "Replace",
 						},
-						runtime = { version = "LuaJIT" },
+
+						runtime = {
+							version = "Lua 5.4",
+						},
+
 						workspace = {
 							checkThirdParty = false,
 							library = {
+								vim.env.VIMRUNTIME,
 								"${3rd}/luv/library",
-								unpack(vim.api.nvim_get_runtime_file("", true)),
 							},
 						},
-						diagnostics = { disable = { "missing-fields" } },
+
+						diagnostics = {
+							globals = { "vim" },
+							disable = { "missing-fields" },
+						},
+
 						format = {
 							enable = false,
 						},
