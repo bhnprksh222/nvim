@@ -70,14 +70,20 @@ vim.keymap.set("v", "p", '"_dP', opts)
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", function()
-	vim.diagnostic.goto_prev({ float = true })
+	vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = "Go to previous diagnostic" })
 
 vim.keymap.set("n", "]d", function()
-	vim.diagnostic.goto_next({ float = true })
+	vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Go to next diagnostic" })
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {
+	desc = "Open floating diagnostic message",
+})
+
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, {
+	desc = "Open diagnostics list",
+})
 
 -- Move line down
 vim.api.nvim_set_keymap("n", "<C-S-j>", ":m .+1<CR>==", { noremap = true, silent = true })
@@ -92,3 +98,19 @@ vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Move to left
 vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "Move to right split" })
 vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Move to below split" })
 vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Move to above split" })
+
+-- Git diff keymaps
+-- Open diff view (side-by-side like your screenshot)
+vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", {
+	desc = "Git Diff (Diffview)",
+})
+
+-- Close diff view
+vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<CR>", {
+	desc = "Close Diffview",
+})
+
+-- File history
+vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory<CR>", {
+	desc = "Git File History",
+})
