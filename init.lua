@@ -47,4 +47,5 @@ require("lazy").setup({
 	require("plugins.strudel"),
 	require("plugins.whitespace"),
 	require("plugins.undo-glow"),
+	require("plugins.notify"),
 })
