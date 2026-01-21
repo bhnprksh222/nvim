@@ -48,4 +48,5 @@ require("lazy").setup({
 	require("plugins.whitespace"),
 	require("plugins.undo-glow"),
 	require("plugins.notify"),
+	require("plugins.conform"),
 })

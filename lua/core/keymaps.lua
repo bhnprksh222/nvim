@@ -114,3 +114,129 @@ vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<CR>", {
 vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory<CR>", {
 	desc = "Git File History",
 })
+
+-- JAVA KEYMAPS — fresh terminal each run (safe from terminal)
+
+-- Store last "real file" buffer (not terminal/help/etc)
+vim.g._java_last_file_buf = vim.g._java_last_file_buf or nil
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		if vim.bo.buftype == "" then
+			vim.g._java_last_file_buf = vim.api.nvim_get_current_buf()
+		end
+	end,
+})
+
+local function java_current_file_path()
+	local buf = vim.g._java_last_file_buf
+	if not buf or not vim.api.nvim_buf_is_valid(buf) then
+		return nil
+	end
+	local name = vim.api.nvim_buf_get_name(buf)
+	if name == "" or name:match("^term://") then
+		return nil
+	end
+	return name
+end
+
+-- Store last Java run terminal buffer id
+vim.g.java_run_term_buf = vim.g.java_run_term_buf or nil
+
+local function close_java_term_if_exists()
+	local buf = vim.g.java_run_term_buf
+	if buf and vim.api.nvim_buf_is_valid(buf) then
+		-- close windows that show it
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			if vim.api.nvim_win_get_buf(win) == buf then
+				vim.api.nvim_win_close(win, true)
+			end
+		end
+		-- wipe buffer (kills terminal job)
+		vim.api.nvim_buf_delete(buf, { force = true })
+	end
+	vim.g.java_run_term_buf = nil
+end
+
+local function open_fresh_java_term_and_run(cmd)
+	close_java_term_if_exists()
+
+	vim.cmd("botright split | resize 12 | terminal")
+	local term_buf = vim.api.nvim_get_current_buf()
+	vim.g.java_run_term_buf = term_buf
+
+	local chan = vim.b.terminal_job_id
+	if chan then
+		vim.fn.chansend(chan, "clear\n" .. cmd .. "\n")
+	end
+end
+
+-- Run current Java file (simple, no package)
+vim.keymap.set("n", "<leader>jr", function()
+	local file = java_current_file_path()
+	if not file then
+		vim.notify("No Java file detected. Focus a .java file first.", vim.log.levels.WARN)
+		return
+	end
+
+	local dir = vim.fn.fnamemodify(file, ":h")
+	local classname = vim.fn.fnamemodify(file, ":t:r")
+
+	local cmd = string.format(
+		"cd %s && javac %s && java %s",
+		vim.fn.shellescape(dir),
+		vim.fn.shellescape(file),
+		vim.fn.shellescape(classname)
+	)
+
+	open_fresh_java_term_and_run(cmd)
+end, { desc = "Java: compile & run (fresh terminal)" })
+
+-- Run current Java file (supports `package ...;`)
+vim.keymap.set("n", "<leader>jR", function()
+	local file = java_current_file_path()
+	if not file then
+		vim.notify("No Java file detected. Focus a .java file first.", vim.log.levels.WARN)
+		return
+	end
+
+	local dir = vim.fn.fnamemodify(file, ":h")
+
+	-- detect package
+	local pkg
+	for _, line in ipairs(vim.fn.readfile(file)) do
+		local m = line:match("^%s*package%s+([%w%.]+)%s*;")
+		if m then
+			pkg = m
+			break
+		end
+	end
+
+	local classname = vim.fn.fnamemodify(file, ":t:r")
+	local runTarget = pkg and (pkg .. "." .. classname) or classname
+
+	-- run from src root if under /src/
+	local cwd = dir
+	local srcIndex = cwd:find("/src/")
+	if srcIndex then
+		cwd = cwd:sub(1, srcIndex + 3)
+	end
+
+	local cmd = string.format(
+		"cd %s && javac %s && java %s",
+		vim.fn.shellescape(cwd),
+		vim.fn.shellescape(file),
+		vim.fn.shellescape(runTarget)
+	)
+
+	open_fresh_java_term_and_run(cmd)
+end, { desc = "Java: compile & run (package aware, fresh terminal)" })
+
+-- Explicit Java formatting via Conform
+vim.keymap.set("n", "<leader>jf", function()
+	require("conform").format({
+		lsp_fallback = false,
+		async = true,
+		timeout_ms = 3000,
+	})
+end, { desc = "Java: format file" })
